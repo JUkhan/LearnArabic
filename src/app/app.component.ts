@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
+import { TranslateService } from "@ngx-translate/core";
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,9 +20,10 @@ export class MyApp {
 
   constructor(public platform: Platform,
     public statusBar: StatusBar,
+    private translate:TranslateService,
     public splashScreen: SplashScreen) {
     this.initializeApp();    
-    platform.setLang('en-US',true);
+    this.translate.use('en');
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
