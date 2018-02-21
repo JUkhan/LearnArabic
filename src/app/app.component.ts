@@ -14,11 +14,13 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
+  constructor(public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen) {
+    this.initializeApp();    
+    platform.setLang('en-US',true);
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
