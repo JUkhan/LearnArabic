@@ -7,7 +7,7 @@ export function onSyncError(err) {
 
 export const storageSyncReducer = storageSync({
   keys: [
-    "hello",   
+    "hello", "setting",  
   ], // Only sync the `collection` state
   ignoreActions: [
     // Don't sync when these actions occur

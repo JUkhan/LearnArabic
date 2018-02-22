@@ -3,48 +3,16 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>{{"PAGES.HOME"|translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <img src="./assets/imgs/Bismillah_Usmani.svg" alt="learn arabic">
+    </ion-card-header>
+    <ion-card-content>{{"WELCOME"|translate}}</ion-card-content>
+  </ion-card>
 
-  <ion-grid>
-    <ion-row>
-      <ion-card>
-        <ion-card-header>
-          <img src="./assets/imgs/Bismillah_Usmani.svg" alt="learn arabic">
-        </ion-card-header>
-        <ion-card-content>{{"WELCOME"|translate}}</ion-card-content>
-      </ion-card>
-    </ion-row>
-    <ion-row>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="informationPage()">
-        <ion-icon name="md-help-circle"></ion-icon>
-        <span>{{"information"|translate}}</span>
-      </button>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="resultsPage()">
-        <ion-icon name="md-pulse"></ion-icon>
-        <span>{{"results"|translate}}</span>
-      </button>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="notesPage()">
-        <ion-icon name="md-list-box"></ion-icon>
-        <span>{{"notes"|translate}}</span>
-      </button>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="settingsPage()">
-        <ion-icon name="md-settings"></ion-icon>
-        <span>{{"settings"|translate}}</span>
-      </button>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="collaboratorsPage()">
-        <ion-icon name="md-contacts"></ion-icon>
-        <span>{{"collaborators"|translate}}</span>
-      </button>
-      <button class="ion-col col-6 col-md-6 col-sm-6 col-lg-12 col-xl-12" (click)="feedback()">
-        <ion-icon name="md-megaphone"></ion-icon>
-        <span>{{"feedback"|translate}}</span>
-      </button>
-    </ion-row>
-  </ion-grid>
-
-  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
 </ion-content>

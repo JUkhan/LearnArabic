@@ -1,0 +1,16 @@
+{
+    "WELCOME":"আসুন আমরা আরবী শিখি এবং কুরআন পড়ি",
+    "SETTINGS":{       
+        "LANGUAGE":"ভাষা",
+        "LANGUAGE_CHANGE":"ভাষা পরিবর্তন"
+    },
+    "LANGUAGES":{
+        "BANGLA":"বাংলা",
+        "ENGLISH":"ইংরেজি"
+    },    
+    "PAGES":{
+        "MENU":"তালিকা",
+        "HOME":"বাড়ি",
+        "SETTINGS":"সেটিংস"
+    }
+}        

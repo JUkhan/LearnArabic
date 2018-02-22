@@ -1,3 +1,16 @@
-{
-    "WELCOME":"Learn Arabic"
+{   
+    "WELCOME":"Let's learn Arabic and read The Quran",
+    "SETTINGS":{       
+        "LANGUAGE":"Language",
+        "LANGUAGE_CHANGE":"Language changes"
+    },
+    "LANGUAGES":{
+        "BANGLA":"Bangla",
+        "ENGLISH":"English"
+    },
+    "PAGES":{
+        "MENU":"Menu",
+        "HOME":"Home",
+        "SETTINGS":"Settings"
+    }
 }

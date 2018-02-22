@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -14,6 +15,8 @@ import { reducers } from "./store/reducers/root.reducer";
 import { metaReducers } from "./store/reducers/storage-sync.reducer";
 import { StorageSyncEffects } from "ngrx-store-ionic-storage/dist";
 import { EffectsModule } from "@ngrx/effects";
+import { IonicStorageModule } from '@ionic/storage';
+import {AppService} from './services/appService';
 
 import {
   HttpClientModule,
@@ -25,11 +28,13 @@ import {
   TranslateLoader,
   TranslateService
 } from "@ngx-translate/core";
+import { SettingEffects } from './store/effects/setting.effects';
 
 const components = [
   MyApp,
   HomePage,
-  ListPage
+  ListPage,
+  SettingsPage
 ];
 
 @NgModule({
@@ -39,6 +44,7 @@ const components = [
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -50,7 +56,7 @@ const components = [
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
       StorageSyncEffects,
-      //helloEffects,
+      SettingEffects,
 
     ]),
   ],
@@ -62,6 +68,7 @@ const components = [
     StatusBar,
     SplashScreen,
     TranslateService,
+    AppService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
@@ -69,7 +76,6 @@ export class AppModule { }
 
 // AoT requires an exported function for factories
 // By default this will look for your translation json files in i18n/, but for Ionic you must change this to look in the src/assets directory. We can do this by creating a function that returns a new TranslateLoader:
-export function createTranslateLoader(http: HttpClient) {
-  console.log('HTTP:', http);
+export function createTranslateLoader(http: HttpClient) { 
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }

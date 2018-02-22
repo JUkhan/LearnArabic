@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 export class HomePage {
 
   constructor(public navCtrl: NavController,  private store: Store<AppState>) {
-    this.store.select(_=>_.hello).subscribe(console.log);
+    //this.store.select(_=>_.hello).subscribe(console.log);
     
   }
 
