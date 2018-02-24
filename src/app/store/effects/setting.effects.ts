@@ -26,7 +26,7 @@ export class SettingEffects {
 
   @Effect()
   changeLanguage$: Observable<Action> = this.action$
-    .ofType<settingActions.LoadSetting>(settingActions.CHANGE_LANGUAGE)
+    .ofType<settingActions.LoadSetting>(settingActions.CHANGE_LANGUAGE, settingActions.UPDATE_BOOK_INFO)
     .pipe(
       withLatestFrom(this.store$),
       mergeMap(([action, state]) => {
@@ -35,4 +35,5 @@ export class SettingEffects {
         return empty();
       })
     );
+
 }

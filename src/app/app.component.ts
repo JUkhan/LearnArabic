@@ -12,6 +12,8 @@ import { AppState } from './models/app.state';
 import { SettingState } from './store/reducers/setting.reducer';
 import * as settingActions from './store/actions/setting.actions';
 import { AppService } from './services/appService';
+import { BookPage } from '../pages/book/book';
+import { LessonPage } from '../pages/lesson/lesson';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,48 +29,47 @@ export class MyApp implements OnDestroy {
     private store: Store<AppState>,
     private appService: AppService,
     public splashScreen: SplashScreen) {
-    this.initializeApp();
-    this.appService.getData('setting').then((val) => {
-      console.log('Your setting is', val);
-      this.store.dispatch(new settingActions.LoadSetting(val));
-    });
-    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
-      console.log(setting);
+    this.initializeApp();    
+    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {       
+      this.appService.setting=setting;
       this.translate.use(setting.language);
+      this.checkActivePage();
     });
   }
-
-  ionViewDidLoad() {
-
+  checkActivePage(){
+      if(this.appService.setting.bookName && this.appService.setting.activeLesson && this.appService.setting.activePage){
+        this.nav.setRoot(LessonPage);
+      }     
   }
-  ngOnDestroy() {
-    console.log('destroy setting');
+  ionViewDidLoad() {
+    
+  }
+  ngOnDestroy() {   
     this.settingSubscription.unsubscribe();
   }
   initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+    this.platform.ready().then(() => {      
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-
-    let component;
+  openPage(page) {   
     switch (page) {
       case 'home':
-        component = HomePage;
+        this.nav.setRoot(HomePage);
         break;
       case 'setting':
-        component = SettingsPage;
+        this.nav.setRoot(SettingsPage);
+        break;
+      case 'book1':
+        const bookInfo:SettingState={bookName:'book1',activeLesson:'', activePage:'', pages:0, lessons:0 };
+        this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
+        this.nav.setRoot(BookPage);
         break;
       default:
-        component = HomePage;
+
     }
-    this.nav.setRoot(component);
+
   }
 }

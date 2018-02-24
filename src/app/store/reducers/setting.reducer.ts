@@ -2,7 +2,12 @@
 import * as settingActions from '../actions/setting.actions';
 
 export interface SettingState {
-    language: 'ba' | 'en';
+    language?: 'ba' | 'en';
+    bookName?:string;
+    activeLesson?:string;
+    activePage?:string;
+    pages?:number;
+    lessons?:number;
 }
 
 export const initialState: SettingState = {
@@ -16,6 +21,9 @@ export function settingReducer(
     switch (action.type) {
         case settingActions.CHANGE_LANGUAGE: {
             return { ...state, language: action.payload };
+        }
+        case settingActions.UPDATE_BOOK_INFO: {
+            return { ...state,  ...action.payload };
         }
         case settingActions.LOAD_SETTING:
             return action.payload || initialState

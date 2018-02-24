@@ -12,7 +12,6 @@ import { SettingState } from '../../app/store/reducers/setting.reducer';
  * Ionic pages and navigation.
  */
 
-
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html',
@@ -31,7 +30,7 @@ export class SettingsPage implements OnDestroy {
     public navParams: NavParams) {
       this.settingSubscription=this.store.select(state=>state.setting).subscribe((setting:SettingState)=>{
         this.language=setting.language;
-      })
+      });
   }
 
   ionViewDidLoad() {

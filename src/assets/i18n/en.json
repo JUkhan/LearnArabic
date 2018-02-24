@@ -11,6 +11,7 @@
     "PAGES":{
         "MENU":"Menu",
         "HOME":"Home",
-        "SETTINGS":"Settings"
+        "SETTINGS":"Settings",
+        "BOOK1":"Book 1"
     }
 }
