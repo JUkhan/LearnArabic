@@ -8,10 +8,14 @@ export interface SettingState {
     activePage?:string;
     pages?:number;
     lessons?:number;
+    theme?:string;
+    fontSize?:string;
 }
 
 export const initialState: SettingState = {
-    language: 'ba'
+    language: 'ba',
+    theme:'white',
+    fontSize:'18px'
 };
 
 export function settingReducer(

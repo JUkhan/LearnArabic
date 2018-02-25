@@ -1,21 +1,48 @@
-<!--
-  Generated template for the LessonPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <button ion-button menuToggle right>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title text-capitalize>{{appService.getTitle()}}</ion-title>
-  </ion-navbar>
-
+<ion-header no-border> 
+  <ion-toolbar color="primary">
+      <ion-title text-left text-capitalize>{{appService.getTitle()}}</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="showPopover($event)" >
+          <ion-icon name="more"></ion-icon>
+        </button>       
+      </ion-buttons> 
+      
+  
+      <ion-buttons end>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+  
+    </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding [ngStyle]="theme">
+
+  <p [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line" *ngFor="let line of pageData.lines">
+    <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(word)" class="word" *ngFor="let word of line.words">
+      {{word.w}}
+    </span>
+  </p>
 
 </ion-content>
+
+<ion-footer no-border> 
+  <ion-toolbar color="primary">
+      <ion-title>{{selectedWord.m}}</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="prev()" [disabled]="activePage===1">
+          <ion-icon name="arrow-dropleft"></ion-icon>
+        </button>
+      </ion-buttons>    
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="next()" [disabled]="activePage===totalPage">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+      </ion-buttons>
+  
+    </ion-toolbar>
+
+</ion-footer>

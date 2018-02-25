@@ -6,6 +6,7 @@ import { SettingState } from '../store/reducers/setting.reducer';
 @Injectable()
 export class AppService{
     setting:SettingState;
+    inLesson:boolean=false;
     constructor(public storage: Storage, public http:HttpClient){
         
     }
@@ -40,8 +41,16 @@ export class AppService{
             }
         });
         
-    }
-    private getTitleInBangla(){
-
+    }    
+    getTheme(themeName){
+        switch (themeName) {
+            case 'white': return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
+            case 'tan': return{background:'rgb(249, 241, 228)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
+            case 'grey': return{background:'rgb(76, 75, 80)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  
+            case 'purple': return{background:'#b662ea', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}  
+            case 'black': return{background:'rgb(0, 0, 0)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  
+            default:
+             return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
+        }
     }
 }

@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { SettingsPage } from '../pages/settings/settings';
 import { BookPage } from '../pages/book/book';
 import { LessonPage } from '../pages/lesson/lesson';
+import { BookPopoverPage } from '../pages/book-popover/book-popover';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +19,7 @@ import { StorageSyncEffects } from "ngrx-store-ionic-storage/dist";
 import { EffectsModule } from "@ngrx/effects";
 import { IonicStorageModule } from '@ionic/storage';
 import {AppService} from './services/appService';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 import {
   HttpClientModule,
@@ -36,7 +38,8 @@ const components = [
   HomePage,  
   SettingsPage,
   BookPage,
-  LessonPage
+  LessonPage,
+  BookPopoverPage
 ];
 
 @NgModule({
@@ -69,7 +72,7 @@ const components = [
   providers: [
     StatusBar,
     SplashScreen,
-    TranslateService,
+    TranslateService,TextToSpeech,
     AppService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

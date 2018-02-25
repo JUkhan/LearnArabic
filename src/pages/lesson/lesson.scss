@@ -1,3 +1,58 @@
 page-lesson {
-
+    .word{
+        padding-left: 0.2em;  
+        padding-right: 0.2em;       
+        line-height: 30px;
+        cursor: pointer;
+    }
+    .line{
+      
+    }
+    .line:first-child{
+        margin-top:0;       
+    }
+    .selected{
+        color:gold;
+    }
+    .ws25{
+        display: inline-block;
+        width: 25px;
+    }
+    .ws50{
+        display: inline-block;
+        width: 50px;
+    }
+    .ws75{
+        display: inline-block;
+        width: 75px;
+    }
+    .ws100{
+        display: inline-block;
+        width: 100px;
+    }
+    .ws150{
+        display: inline-block;
+        width: 150px;
+    }
+    .ws200{
+        display: inline-block;
+        width: 200px;
+    }
+    .ws250{
+        display: inline-block;
+        width: 250px;
+    }
+    .ws300{
+        display: inline-block;
+        width: 300px;
+    }
+    .bt{
+        border-top: solid 1px black;
+    }
+    .bbs{
+        border-bottom: solid 1px black;
+    }
+    .bbd{
+        border-bottom: dotted 1px black;
+    }
 }

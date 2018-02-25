@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,7 +18,7 @@ import { LessonPage } from '../pages/lesson/lesson';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp implements OnDestroy {
+export class MyApp implements OnDestroy, AfterViewInit {
   @ViewChild(Nav) nav: Nav;
   settingSubscription: any;
   rootPage: any = HomePage;
@@ -29,32 +29,35 @@ export class MyApp implements OnDestroy {
     private store: Store<AppState>,
     private appService: AppService,
     public splashScreen: SplashScreen) {
-    this.initializeApp();    
-    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {       
-      this.appService.setting=setting;
+    this.initializeApp();
+    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
+      this.appService.setting = setting;
       this.translate.use(setting.language);
-      this.checkActivePage();
+      console.log('setting changes');
+      !this.appService.inLesson && this.checkActivePage();
     });
   }
-  checkActivePage(){
-      if(this.appService.setting.bookName && this.appService.setting.activeLesson && this.appService.setting.activePage){
-        this.nav.setRoot(LessonPage);
-      }     
+  checkActivePage() {
+    if (this.appService.setting.bookName && this.appService.setting.activeLesson && this.appService.setting.activePage) {
+      this.nav.setRoot(LessonPage);
+    }
   }
-  ionViewDidLoad() {
-    
-  }
-  ngOnDestroy() {   
+ 
+  ngOnDestroy() {
     this.settingSubscription.unsubscribe();
   }
+  ngAfterViewInit() {
+    console.log('after view init');
+    this.checkActivePage();
+  }
   initializeApp() {
-    this.platform.ready().then(() => {      
+    this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
-  openPage(page) {   
+  openPage(page) {
     switch (page) {
       case 'home':
         this.nav.setRoot(HomePage);
@@ -63,7 +66,7 @@ export class MyApp implements OnDestroy {
         this.nav.setRoot(SettingsPage);
         break;
       case 'book1':
-        const bookInfo:SettingState={bookName:'book1',activeLesson:'', activePage:'', pages:0, lessons:0 };
+        const bookInfo: SettingState = { bookName: 'book1', activeLesson: '', activePage: '', pages: 0, lessons: 0 };
         this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
         this.nav.setRoot(BookPage);
         break;
