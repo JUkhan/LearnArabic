@@ -1,48 +1,57 @@
-<ion-header no-border> 
+<ion-header no-border>
   <ion-toolbar color="primary">
-      <ion-title text-left text-capitalize>{{appService.getTitle()}}</ion-title>
-      <ion-buttons end>
-        <button ion-button icon-only (click)="showPopover($event)" >
-          <ion-icon name="more"></ion-icon>
-        </button>       
-      </ion-buttons> 
-      
-  
-      <ion-buttons end>
-        <button ion-button icon-only menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-      </ion-buttons>
-  
-    </ion-toolbar>
+    <ion-title text-left text-capitalize>{{appService.getTitle()}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="showPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding [ngStyle]="theme">
-
+  <div *ngIf="pageData.videos">
+  <ion-list>
+    <ion-item *ngFor="let video of pageData.videos">
+      <ion-icon [color]="video.playing?'danger':'primary'" name="videocam" item-start></ion-icon>
+      {{video.title}}
+      <button [disabled]="video.playing" ion-button clear item-end (click)="clickPlay(video)">Play</button>
+    </ion-item>
+  </ion-list> 
+  <div id="player"></div>    
+</div>
   <p [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line" *ngFor="let line of pageData.lines">
-    <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(word)" class="word" *ngFor="let word of line.words">
+    <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
       {{word.w}}
     </span>
   </p>
 
 </ion-content>
 
-<ion-footer no-border> 
+<ion-footer no-border>
   <ion-toolbar color="primary">
-      <ion-title>{{selectedWord.m}}</ion-title>
-      <ion-buttons end>
-        <button ion-button icon-only (click)="prev()" [disabled]="activePage===1">
-          <ion-icon name="arrow-dropleft"></ion-icon>
-        </button>
-      </ion-buttons>    
-  
-      <ion-buttons end>
-        <button ion-button icon-only (click)="next()" [disabled]="activePage===totalPage">
-          <ion-icon name="arrow-dropright"></ion-icon>
-        </button>
-      </ion-buttons>
-  
-    </ion-toolbar>
+    <ion-title>{{selectedWord.m}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="prev()" [disabled]="activePage===1">
+        <ion-icon name="arrow-dropleft"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="next()" [disabled]="activePage===totalPage">
+        <ion-icon name="arrow-dropright"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
 
 </ion-footer>

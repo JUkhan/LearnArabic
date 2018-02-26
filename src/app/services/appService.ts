@@ -34,6 +34,7 @@ export class AppService{
         return `${this.setting.bookName} ▸ ${this.setting.activeLesson} ▸ ${this.setting.activePage}`.replace(/(\d)+/g, this.getNumber.bind(this))
         .replace(/([a-z])+/g, w=>{
             switch (w) {
+                case 'grammar': return 'ব্যাকরণ-'
                 case 'book': return 'বই-';
                 case 'lesson': return 'পাঠ-';
                 case 'page': return 'পৃষ্ঠা-';              

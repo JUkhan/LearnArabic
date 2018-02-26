@@ -10,6 +10,7 @@ export interface SettingState {
     lessons?:number;
     theme?:string;
     fontSize?:string;
+    video?:{id?:string, time?:number}
 }
 
 export const initialState: SettingState = {

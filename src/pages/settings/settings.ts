@@ -32,12 +32,8 @@ export class SettingsPage implements OnDestroy {
         this.language=setting.language;
       });
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsPage');
-  }
-  ngOnDestroy(){
-    console.log('destroy setting');
+  
+  ngOnDestroy(){    
     this.settingSubscription.unsubscribe();
   }
   changeLanguage(lan:string) {
@@ -61,13 +57,12 @@ export class SettingsPage implements OnDestroy {
         {
           text: "Cancel",
           handler: data => {
-            console.log("Cancel clicked");
+            
           }
         },
         {
           text: "Save",
-          handler: data => {
-           console.log(data)
+          handler: data => {           
            this.store.dispatch(new settingActions.ChangeLanguage(data));
           }
         }

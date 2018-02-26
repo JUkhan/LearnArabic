@@ -32,8 +32,7 @@ export class MyApp implements OnDestroy, AfterViewInit {
     this.initializeApp();
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
       this.appService.setting = setting;
-      this.translate.use(setting.language);
-      console.log('setting changes');
+      this.translate.use(setting.language);      
       !this.appService.inLesson && this.checkActivePage();
     });
   }
@@ -46,8 +45,7 @@ export class MyApp implements OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.settingSubscription.unsubscribe();
   }
-  ngAfterViewInit() {
-    console.log('after view init');
+  ngAfterViewInit() {    
     this.checkActivePage();
   }
   initializeApp() {

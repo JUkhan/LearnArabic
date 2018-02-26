@@ -29,8 +29,7 @@ export class SettingEffects {
     .ofType<settingActions.LoadSetting>(settingActions.CHANGE_LANGUAGE, settingActions.UPDATE_BOOK_INFO)
     .pipe(
       withLatestFrom(this.store$),
-      mergeMap(([action, state]) => {
-        console.log(action, state);
+      mergeMap(([action, state]) => {        
         this.appService.setData('setting', state.setting);
         return empty();
       })
