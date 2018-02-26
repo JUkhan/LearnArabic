@@ -14,6 +14,7 @@ import * as settingActions from './store/actions/setting.actions';
 import { AppService } from './services/appService';
 import { BookPage } from '../pages/book/book';
 import { LessonPage } from '../pages/lesson/lesson';
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 
 @Component({
   templateUrl: 'app.html'
@@ -67,6 +68,9 @@ export class MyApp implements OnDestroy, AfterViewInit {
         const bookInfo: SettingState = { bookName: 'book1', activeLesson: '', activePage: '', pages: 0, lessons: 0 };
         this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
         this.nav.setRoot(BookPage);
+        break;
+        case 'bookmarks':
+        this.nav.setRoot(BookmarksPage);
         break;
       default:
 

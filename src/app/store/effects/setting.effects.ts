@@ -30,7 +30,7 @@ export class SettingEffects {
     .pipe(
       withLatestFrom(this.store$),
       mergeMap(([action, state]) => {        
-        this.appService.setData('setting', state.setting);
+        //this.appService.setData('setting', state.setting);
         return empty();
       })
     );

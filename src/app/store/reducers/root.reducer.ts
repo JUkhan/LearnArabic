@@ -3,9 +3,9 @@ import { ActionReducerMap } from "@ngrx/store";
 import { AppState } from "../../models/app.state";
 
 import { settingReducer } from "./setting.reducer";
-import { helloReducer } from "./hello.reducer";
+import { favoriteReducer } from "./favorite.reducer";
 
-export const reducers: ActionReducerMap<AppState> = {
-  hello: helloReducer,
-  setting:settingReducer
+export const reducers: ActionReducerMap<AppState> = {  
+  setting:settingReducer,
+  favorite: favoriteReducer
 };

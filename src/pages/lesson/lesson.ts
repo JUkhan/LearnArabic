@@ -4,9 +4,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app/models/app.state';
 import { SettingState } from '../../app/store/reducers/setting.reducer';
 import * as settingActions from '../../app/store/actions/setting.actions';
+import * as favoriteActions from '../../app/store/actions/favorite.actions';
 import { AppService } from '../../app/services/appService';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { BookPopoverPage } from '../book-popover/book-popover';
+import { Favorite } from '../../app/store/reducers/favorite.reducer';
 
 /**
  * Generated class for the LessonPage page.
@@ -27,16 +29,24 @@ export class LessonPage implements OnDestroy {
   selectedWord: any = {};
   theme: any = {};
   settingSubscription: any;
+  favoriteSubscription: any;
+  favoriteList:Favorite[]=[];
 
   constructor(
     public navCtrl: NavController,
     private store: Store<AppState>,
     private tts: TextToSpeech,
-    public plt: Platform,
+    public platform: Platform,
     public popoverCtrl: PopoverController,
     private appService: AppService,
     public navParams: NavParams) {
-    this.theme = this.appService.getTheme(this.appService.setting.theme);
+    //this.theme = this.appService.getTheme(this.appService.setting.theme);
+    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
+      this.theme = this.appService.getTheme(setting.theme);      
+    });
+    this.favoriteSubscription= this.store.select(s => s.favorite).subscribe((favoriteList: Favorite[]) => {
+      this.favoriteList=favoriteList;     
+    });
     if (!this.appService.setting.pages) {
       this.appService.getBook(`${this.appService.setting.bookName}/${this.appService.setting.activeLesson}/info`).subscribe((res: any) => {
         this.totalPage = res.pages;
@@ -49,16 +59,13 @@ export class LessonPage implements OnDestroy {
       this.totalPage = this.appService.setting.pages;
       this.activePage = +this.appService.setting.activePage.replace('page', '');
       this.loadPageData(this.activePage);
-    }
-    this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
-      this.theme = this.appService.getTheme(setting.theme);
-      //console.log(setting);
-    });
+    }    
     this.appService.inLesson = true;
   }
   ngOnDestroy() {
     this.appService.inLesson = false;
     this.settingSubscription.unsubscribe();
+    this.favoriteSubscription.unsubscribe();
   }
 
   prev() {
@@ -81,6 +88,14 @@ export class LessonPage implements OnDestroy {
   loadPageData(pageNo) {
     this.appService.getBook(`${this.appService.setting.bookName}/${this.appService.setting.activeLesson}/page${pageNo}`).subscribe((res: any) => {
       this.pageData = res;
+      if(Array.isArray(this.pageData.lines)){
+        this.favoriteList.forEach(f=>{          
+            if(f.book===this.appService.setting.bookName &&
+            'lesson'+f.lesson===this.appService.setting.activeLesson &&
+            f.page===this.activePage)
+            this.pageData.lines[f.line].fav=true;
+        });
+      }
       if (Array.isArray(res.videos)) {
         const video = res.videos.find(_ => _.id === this.appService.setting.video.id);
         if (video) {
@@ -105,22 +120,22 @@ export class LessonPage implements OnDestroy {
     const ttsOptions: any = {
       text: word.w
     }
-    if(this.plt.is("core")){
+    if (this.platform.is('core') || this.platform.is('mobileweb')) {
       if (word.d === 'rtl' || line.d === 'rtl') {
         responsiveVoice.speak(word.w || word.a, "Arabic Female");
       } else {
         responsiveVoice.speak(word.w || word.a);
       }
-    }else{
+    } else {
       if (word.d === 'rtl' || line.d === 'rtl') {
         responsiveVoice.speak(word.w || word.a, "Arabic Female");
       } else {
         //responsiveVoice.speak(word.w || word.a);
-        this.tts.speak({text:word.w|| word.a, rate:0.5})
-       .then(() => {})
-       .catch((reason: any) => console.log(reason));
+        this.tts.speak({ text: word.w || word.a, rate: 0.5 })
+          .then(() => { })
+          .catch((reason: any) => console.log(reason));
       }
-    }   
+    }
   }
 
   calculateCssClass(word) {
@@ -142,7 +157,7 @@ export class LessonPage implements OnDestroy {
   selectedVideo: any = {};
   player: any;
   clickPlay(video) {
-    this.selectedVideo.end=false;
+    this.selectedVideo.end = false;
     this.selectedVideo.playing = false;
     this.selectedVideo = video;
     this.initPlayer(video);
@@ -189,6 +204,22 @@ export class LessonPage implements OnDestroy {
       if (!this.selectedVideo.end)
         this.store.dispatch(new settingActions.UpdateBookInfo({ video: { id: this.selectedVideo.id, time: event.target.getCurrentTime() } }));
     }
+  }
+  addToFavorites(line, li) {
+    console.log('press');
+    
+    if (typeof line.fav === 'undefined')
+      line.fav = true;
+    else line.fav = !line.fav;
+    const favObj:Favorite={
+      book:this.appService.setting.bookName,
+      lesson:+this.appService.setting.activeLesson.replace('lesson',''),
+      page:this.activePage,
+      line:li
+    }
+    if(line.fav)
+      this.store.dispatch(new favoriteActions.FavoritevorateAdd(favObj));
+    else  this.store.dispatch(new favoriteActions.FavoritevorateRemove(favObj));
   }
 }
 

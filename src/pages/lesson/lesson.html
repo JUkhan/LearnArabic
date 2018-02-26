@@ -29,7 +29,7 @@
   </ion-list> 
   <div id="player"></div>    
 </div>
-  <p [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line" *ngFor="let line of pageData.lines">
+  <p (press)="addToFavorites(line, li)" [class.fav]="line.fav" [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line" *ngFor="let line of pageData.lines;let li=index">
     <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
       {{word.w}}
     </span>

@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Storage } from '@ionic/storage';
 import { HttpClient } from "@angular/common/http";
 import { SettingState } from '../store/reducers/setting.reducer';
 
@@ -7,15 +6,9 @@ import { SettingState } from '../store/reducers/setting.reducer';
 export class AppService{
     setting:SettingState;
     inLesson:boolean=false;
-    constructor(public storage: Storage, public http:HttpClient){
+    constructor(public http:HttpClient){
         
-    }
-    setData(key:string, value:any){
-        this.storage.set(key, value);
-    }
-    getData(key:string){
-        return this.storage.get(key);
-    }
+    }    
     getBook(path:string){ 
         //let url='./assets/books/'+ this.setting.language+'/'+path+'.json';
         let url='./assets/books/en/'+path+'.json';

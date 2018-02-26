@@ -40,10 +40,7 @@ export class BookPage {
    
     return this.appService.getLesson()+this.appService.getNumber(index);
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BookPage');
-  }
-
+  
   lessonSelected(lesson){
     const bookInfo:SettingState={activeLesson:lesson.id, activePage:'', pages:0};
     this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));

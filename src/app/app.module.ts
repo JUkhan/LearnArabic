@@ -8,6 +8,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { BookPage } from '../pages/book/book';
 import { LessonPage } from '../pages/lesson/lesson';
 import { BookPopoverPage } from '../pages/book-popover/book-popover';
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -39,7 +40,8 @@ const components = [
   SettingsPage,
   BookPage,
   LessonPage,
-  BookPopoverPage
+  BookPopoverPage,
+  BookmarksPage
 ];
 
 @NgModule({
