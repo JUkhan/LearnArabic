@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app/models/app.state';
+import { Bookmark } from '../../app/store/reducers/bookmark.reducer';
 
 /**
  * Generated class for the BookmarksPage page.
@@ -12,13 +15,28 @@ import { NavController, NavParams } from 'ionic-angular';
   selector: 'page-bookmarks',
   templateUrl: 'bookmarks.html',
 })
-export class BookmarksPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+export class BookmarksPage implements OnDestroy {
+  bookmarkSubscription: any;
+  bookmarks:any[]=[];
+  constructor(public navCtrl: NavController,
+    private store: Store<AppState>,
+    public navParams: NavParams) {
+    this.bookmarkSubscription = this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
+      //this.bookmarkList=bookmarkList; 
+      let temp={};
+      bookmarkList.forEach(bm=>{        
+        if(temp[bm.book+bm.lesson+bm.page]){
+          temp[bm.book+bm.lesson+bm.page].items.push('Line '+bm.lesson)
+        }else{
+          temp[bm.book+bm.lesson+bm.page]={group:bm.book+' ▸ Lesson'+bm.lesson+' ▸ Page '+bm.page, items:['Line '+(bm.line+1)]}
+        }
+      })
+      this.bookmarks=Object.keys(temp).map(_=>temp[_]);
+      console.log(bookmarkList)
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BookmarksPage');
+  ngOnDestroy() {
+    this.bookmarkSubscription.unsubscribe();
   }
-
 }

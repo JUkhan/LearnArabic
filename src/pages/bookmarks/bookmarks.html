@@ -18,10 +18,12 @@
 <ion-content>
 
   <ion-list>
-    <button menuClose ion-item (click)="openPage('home')">
-      <ion-icon name="bookmark" color="primary" item-start></ion-icon>
-      {{"PAGES.HOME"|translate}}
-    </button>
-    
+    <ion-item-group *ngFor="let g of bookmarks"> 
+      <ion-item-divider color="light">{{g.group}}</ion-item-divider>
+      <button menuClose ion-item *ngFor="let item of g.items" (click)="openPage('home')">
+        <ion-icon name="bookmark" color="primary" item-start></ion-icon>
+        {{item}}
+      </button>
+    </ion-item-group>
   </ion-list>
 </ion-content>

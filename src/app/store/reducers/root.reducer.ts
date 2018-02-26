@@ -3,9 +3,9 @@ import { ActionReducerMap } from "@ngrx/store";
 import { AppState } from "../../models/app.state";
 
 import { settingReducer } from "./setting.reducer";
-import { favoriteReducer } from "./favorite.reducer";
+import { bookmarkReducer } from "./bookmark.reducer";
 
 export const reducers: ActionReducerMap<AppState> = {  
   setting:settingReducer,
-  favorite: favoriteReducer
+  bookmark: bookmarkReducer
 };
