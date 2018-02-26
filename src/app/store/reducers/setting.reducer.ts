@@ -16,7 +16,8 @@ export interface SettingState {
 export const initialState: SettingState = {
     language: 'ba',
     theme:'white',
-    fontSize:'18px'
+    fontSize:'18px',
+    video:{}
 };
 
 export function settingReducer(
