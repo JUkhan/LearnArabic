@@ -5,14 +5,23 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{"PAGES.BOOK_MARK"|translate}}</ion-title>
+    <button ion-button menuToggle end>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
-  <ion-navbar>
-    <ion-title>bookmarks</ion-title>
-  </ion-navbar>
-
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
+  <ion-list>
+    <button menuClose ion-item (click)="openPage('home')">
+      <ion-icon name="bookmark" color="primary" item-start></ion-icon>
+      {{"PAGES.HOME"|translate}}
+    </button>
+    
+  </ion-list>
 </ion-content>
