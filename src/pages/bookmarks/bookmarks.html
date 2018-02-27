@@ -20,9 +20,9 @@
   <ion-list>
     <ion-item-group *ngFor="let g of bookmarks"> 
       <ion-item-divider color="light">{{g.group}}</ion-item-divider>
-      <button menuClose ion-item *ngFor="let item of g.items" (click)="openPage('home')">
+      <button menuClose ion-item *ngFor="let item of g.items" (click)="goToLesson(g)">
         <ion-icon name="bookmark" color="primary" item-start></ion-icon>
-        {{item}}
+        {{item}} 
       </button>
     </ion-item-group>
   </ion-list>

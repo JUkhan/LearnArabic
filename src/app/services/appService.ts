@@ -20,18 +20,19 @@ export class AppService{
     getNumber(index:any){        
         return this.setting.language==='en'?index.toString(): index.toString().split('').map((d, i)=>String.fromCharCode(d.charCodeAt(0)+2486)).join('');
     }
-    getTitle(){
+    getTitle(data?:SettingState){
+        if(!data)data=this.setting;
         if(this.setting.language==='en'){
-            return `${this.setting.bookName} ▸ ${this.setting.activeLesson} ▸ ${this.setting.activePage}`;
-        }
-        return `${this.setting.bookName} ▸ ${this.setting.activeLesson} ▸ ${this.setting.activePage}`.replace(/(\d)+/g, this.getNumber.bind(this))
-        .replace(/([a-z])+/g, w=>{
-            switch (w) {
+            return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`;
+        }        
+        return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`.replace(/(\d)+/g, this.getNumber.bind(this))
+        .replace(/([a-zA-Z])+/g, w=>{
+            switch (w.toLowerCase()) {                
                 case 'grammar': return 'ব্যাকরণ-'
                 case 'book': return 'বই-';
                 case 'lesson': return 'পাঠ-';
                 case 'page': return 'পৃষ্ঠা-';              
-                default: break;
+                default: return '';
             }
         });
         
