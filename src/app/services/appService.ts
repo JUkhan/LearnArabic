@@ -14,6 +14,9 @@ export class AppService{
         let url='./assets/books/en/'+path+'.json';
         return this.http.get(url);
     }
+    capitalize(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
     getLesson(){
         return this.setting.language==='en'?'Lesson ':'পাঠ '
     }
@@ -23,7 +26,7 @@ export class AppService{
     getTitle(data?:SettingState){
         if(!data)data=this.setting;
         if(this.setting.language==='en'){
-            return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`;
+            return `${this.capitalize(data.bookName)} ▸ ${data.activeLesson} ▸ ${data.activePage}`;
         }        
         return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`.replace(/(\d)+/g, this.getNumber.bind(this))
         .replace(/([a-zA-Z])+/g, w=>{

@@ -1,22 +1,28 @@
 <ion-header no-border>
-    <ion-toolbar color="primary">
+  <ion-toolbar color="primary">
     <button ion-button menuToggle end>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{"PAGES.HOME"|translate}}</ion-title>
-    </ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <ion-card>
-    <img color="primary" src="./assets/imgs/Bismillah_Usmani.svg" alt="learn arabic">
-    <ion-card-content>
-      <ion-card-title text-center>
-        {{"WELCOME"|translate}}
-      </ion-card-title>
-     
-    </ion-card-content>
-  </ion-card>
+<ion-content>
 
-  
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-1 col-xl-10 offset-xl-1>
+        <ion-card>
+          <img color="primary" src="./assets/imgs/Bismillah_Usmani.svg" alt="learn arabic">
+          <ion-card-content>
+            <ion-card-title text-center>
+              {{"WELCOME"|translate}}
+            </ion-card-title>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

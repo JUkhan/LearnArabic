@@ -96,6 +96,7 @@ export class LessonPage implements OnDestroy {
         });
       }
       if (Array.isArray(res.videos)) {
+        this.player=null;
         const video = res.videos.find(_ => _.id === this.appService.setting.video.id);
         if (video) {
           const tid = setTimeout(() => {
@@ -110,7 +111,9 @@ export class LessonPage implements OnDestroy {
       //console.log(res)
     });
   }
-
+  isBrowser(){
+    return this.platform.is('core') || this.platform.is('mobileweb');
+  }
   setMeaning(line, word) {
     this.selectedWord.s = false;
     word.s = true;
@@ -119,7 +122,7 @@ export class LessonPage implements OnDestroy {
     const ttsOptions: any = {
       text: word.w
     }
-    if (this.platform.is('core') || this.platform.is('mobileweb')) {
+    if (this.isBrowser()) {
       if (word.d === 'rtl' || line.d === 'rtl') {
         responsiveVoice.speak(word.w || word.a, "Arabic Female");
       } else {
@@ -170,7 +173,7 @@ export class LessonPage implements OnDestroy {
     }
     this.player = new YT.Player('player', {
       height: 320,
-      width: 330,
+      width: this.isBrowser()?430:330,
       videoId: video.id,
       // playerVars: { 'autoplay': 1, 'controls': 0 },
       events: {
@@ -178,6 +181,8 @@ export class LessonPage implements OnDestroy {
         'onStateChange': this.onPlayerStateChange.bind(this)
       }
     });
+
+    console.log(this.player);
   }
   onPlayerReady(event) {
     event.target.playVideo();

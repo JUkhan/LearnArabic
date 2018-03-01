@@ -17,24 +17,31 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content padding [ngStyle]="theme">
-  <div *ngIf="pageData.videos">
-  <ion-list>
-    <ion-item *ngFor="let video of pageData.videos">
-      <ion-icon [color]="video.playing?'danger':'primary'" name="videocam" item-start></ion-icon>
-      {{video.title}}
-      <button [disabled]="video.playing" ion-button clear item-end (click)="clickPlay(video)">Play</button>
-    </ion-item>
-  </ion-list> 
-  <div id="player"></div>    
-</div>
-  <p (press)="addToFavorites(line, li)" [class.fav]="line.fav" [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line" *ngFor="let line of pageData.lines;let li=index">
-    <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
-      {{word.w}}
-    </span>
-  </p>
-
+<ion-content [ngStyle]="theme">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-1 col-xl-10 offset-xl-1>
+        <div *ngIf="pageData.videos">
+          <ion-list>
+            <ion-item *ngFor="let video of pageData.videos">
+              <ion-icon [color]="video.playing?'danger':'primary'" name="videocam" item-start></ion-icon>
+              {{video.title}}
+              <button [disabled]="video.playing" ion-button clear item-end (click)="clickPlay(video)">Play</button>
+            </ion-item>
+          </ion-list>
+          <div text-center>
+            <div id="player"></div>
+          </div>
+        </div>
+        <p (press)="addToFavorites(line, li)" [class.fav]="line.fav" [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line"
+          *ngFor="let line of pageData.lines;let li=index">
+          <span [dir]="word.d||'ltr'" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
+            {{word.w}}
+          </span>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer no-border>

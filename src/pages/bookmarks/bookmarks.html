@@ -16,14 +16,19 @@
 
 
 <ion-content>
-
-  <ion-list>
-    <ion-item-group *ngFor="let g of bookmarks"> 
-      <ion-item-divider color="light">{{g.group}}</ion-item-divider>
-      <button menuClose ion-item *ngFor="let item of g.items" (click)="goToLesson(g)">
-        <ion-icon name="bookmark" color="primary" item-start></ion-icon>
-        {{item}} 
-      </button>
-    </ion-item-group>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-1 col-xl-10 offset-xl-1>
+        <ion-list>
+          <ion-item-group *ngFor="let g of bookmarks">
+            <ion-item-divider color="light">{{g.group}}</ion-item-divider>
+            <button menuClose ion-item *ngFor="let item of g.items" (click)="goToLesson(g)">
+              <ion-icon name="bookmark" color="primary" item-start></ion-icon>
+              {{item}}
+            </button>
+          </ion-item-group>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

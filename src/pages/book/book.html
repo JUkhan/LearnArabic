@@ -6,21 +6,27 @@
 -->
 <ion-header no-border>
 
-    <ion-toolbar color="primary">
-    <button ion-button menuToggle end >
+  <ion-toolbar color="primary">
+    <button ion-button menuToggle end>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{"PAGES.BOOK1"|translate}}</ion-title>
-    </ion-toolbar>
+  </ion-toolbar>
 
 </ion-header>
 
-
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let lesson of lessons" (click)="lessonSelected(lesson)">
-        <ion-icon name="leaf" color="primary" item-start></ion-icon>
-      {{ lesson.name }}
-    </button>  
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-1 col-xl-10 offset-xl-1>
+        <ion-list>
+          <button ion-item *ngFor="let lesson of lessons" (click)="lessonSelected(lesson)">
+            <ion-icon name="leaf" color="primary" item-start></ion-icon>
+            {{ lesson.name }}
+          </button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
