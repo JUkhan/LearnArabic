@@ -34,7 +34,7 @@ export class BookPage {
         .fill(0)
         .map((_, index)=>({name:this.getLesson(index+1), id:'lesson'+(index+1)}));
       });
-      console.log(this.appService.setting.bookName);
+      
   }
   getLesson(index:number){
    

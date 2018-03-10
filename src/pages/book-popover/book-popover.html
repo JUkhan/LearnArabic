@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Thems</ion-title>
+    <ion-title>Lessons</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -44,16 +44,17 @@
       </ion-col>
 
     </ion-row>
-
+    <button color="dark" ion-item *ngFor="let lesson of lessons" (click)="lessonSelected(lesson)">
+      <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      {{ lesson.name }}
+    </button>    
   </ion-list>
+  <ion-toolbar color="light">
+    <ion-buttons text-center>
+      <button ion-button icon-only (click)="close()">
+        CLOSE
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
 </ion-content>
-<ion-footer>
-    <ion-toolbar color="light"> 
-        <ion-buttons text-center>
-          <button ion-button icon-only (click)="close()" >
-           Close
-          </button>
-        </ion-buttons>
-    
-      </ion-toolbar>
-</ion-footer>

@@ -41,11 +41,16 @@ export class LessonPage implements OnDestroy {
     private appService: AppService,
     public navParams: NavParams) {    
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
-      this.theme = this.appService.getTheme(setting.theme);      
+      this.theme = this.appService.getTheme(setting.theme);  
+       if(setting.pages===0)this.resolveEmptyPage();    
     });
     this.bookmarkSubscription= this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
       this.bookmarkList=bookmarkList;     
     });
+    this.resolveEmptyPage();
+    this.appService.inLesson = true;
+  }
+  resolveEmptyPage(){
     if (!this.appService.setting.pages) {
       this.appService.getBook(`${this.appService.setting.bookName}/${this.appService.setting.activeLesson}/info`).subscribe((res: any) => {
         this.totalPage = res.pages;
@@ -59,7 +64,6 @@ export class LessonPage implements OnDestroy {
       this.activePage = +this.appService.setting.activePage.replace('page', '');
       this.loadPageData(this.activePage);
     }    
-    this.appService.inLesson = true;
   }
   ngOnDestroy() {
     this.appService.inLesson = false;
@@ -172,8 +176,8 @@ export class LessonPage implements OnDestroy {
       return;
     }
     this.player = new YT.Player('player', {
-      height: 320,
-      width: this.isBrowser()?430:330,
+      height:this.isBrowser()?390: 320,
+      width: this.isBrowser()?640:330,
       videoId: video.id,
       // playerVars: { 'autoplay': 1, 'controls': 0 },
       events: {
