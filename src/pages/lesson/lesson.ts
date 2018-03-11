@@ -128,13 +128,18 @@ export class LessonPage implements OnDestroy {
     }
     if (this.isBrowser()) {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female");
+        responsiveVoice.speak(word.w || word.a, "Arabic Female",{onend:()=>{
+          this.speakForWordMeaning(word.m, false);
+        }}); 
+       
       } else {
-        responsiveVoice.speak(word.w || word.a);
+        responsiveVoice.speak(word.w || word.a);       
       }
     } else {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female");
+        responsiveVoice.speak(word.w || word.a, "Arabic Female",{onend:()=>{
+          this.speakForWordMeaning(word.m, true);
+        }});         
       } else {
         //responsiveVoice.speak(word.w || word.a);
         this.tts.speak({ text: word.w || word.a, rate: 0.5 })
@@ -143,7 +148,34 @@ export class LessonPage implements OnDestroy {
       }
     }
   }
-
+  lineSpeak(line:any){
+    const words=line.words.map(word=>word.w).join(' ');
+    if (this.isBrowser()) {
+      if (line.d === 'rtl') {
+        responsiveVoice.speak(words, "Arabic Female");        
+      } else {
+        responsiveVoice.speak(words);
+      }
+    } else {
+      if (line.d === 'rtl') {
+        responsiveVoice.speak(words, "Arabic Female");
+      } else {        
+        this.tts.speak({ text: words, rate: 0.5 })
+          .then(() => { })
+          .catch((reason: any) => console.log(reason));
+      }
+    }
+  }
+  speakForWordMeaning(word, isTTS){
+    if(isTTS){
+      this.tts.speak({ text: word, rate: 0.5 })
+          .then(() => { })
+          .catch((reason: any) => console.log(reason));
+    }else{
+      console.log(word)
+     console.log(responsiveVoice.speak(word));
+    }
+  }
   calculateCssClass(word) {
     let css: any = { selected: word.s && word.m };
     if (word.ws)

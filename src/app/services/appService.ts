@@ -42,6 +42,7 @@ export class AppService{
     }    
     getTheme(themeName){
         switch (themeName) {
+            case 'xwhite': return{background:'#ddd', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
             case 'white': return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
             case 'tan': return{background:'rgb(249, 241, 228)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
             case 'grey': return{background:'rgb(76, 75, 80)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  

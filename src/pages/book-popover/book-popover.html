@@ -17,21 +17,24 @@
   <ion-list class="popover-page">
     <ion-row>
       <ion-col>
-        <button (click)="changeFontSize('16px')" ion-item detail-none class="text-button text-16" [class.font-selected]="fontSize==='16px'">A</button>
-      </ion-col>
-      <ion-col>
-        <button (click)="changeFontSize('18px')" ion-item detail-none class="text-button text-18" [class.font-selected]="fontSize==='18px'">A</button>
-      </ion-col>
-      <ion-col>
-        <button (click)="changeFontSize('20px')" ion-item detail-none class="text-button text-20" [class.font-selected]="fontSize==='20px'">A</button>
-      </ion-col>
-      <ion-col>
         <button (click)="changeFontSize('22px')" ion-item detail-none class="text-button text-22" [class.font-selected]="fontSize==='22px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('24px')" ion-item detail-none class="text-button text-24" [class.font-selected]="fontSize==='24px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('26px')" ion-item detail-none class="text-button text-26" [class.font-selected]="fontSize==='26px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('28px')" ion-item detail-none class="text-button text-28" [class.font-selected]="fontSize==='28px'">A</button>
       </ion-col>
     </ion-row>
     <ion-row class="row-dots">
       <ion-col>
         <button ion-button="dot" (click)="changeBackground('white')" class="dot-white" [class.selected]="background == 'white'"></button>
+      </ion-col>
+      <ion-col>
+        <button ion-button="dot" (click)="changeBackground('xwhite')" class="dot-xwhite" [class.selected]="background == 'xwhite'"></button>
       </ion-col>
       <ion-col>
         <button ion-button="dot" (click)="changeBackground('tan')" class="dot-tan" [class.selected]="background == 'tan'"></button>

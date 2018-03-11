@@ -31,18 +31,18 @@ page-book-popover {
           padding-right: 0;
         }
       
-        .text-16 {
-          font-size: 16px;
+        .text-22 {
+          font-size: 22px;
         }
 
-        .text-18 {
-          font-size: 18px;
+        .text-24 {
+          font-size: 24px;
         }
-        .text-20 {
-            font-size: 20px;
+        .text-26 {
+            font-size: 26px;
         }
-        .text-22 {
-            font-size: 22px;
+        .text-28 {
+            font-size: 28px;
         }
         .font-selected {
             border-width: 2px;            
@@ -75,7 +75,9 @@ page-book-popover {
         .dot-purple {
           background-color: #b662ea;
         }
-        
+        .dot-xwhite{
+          background-color: #ddd;          
+        }
         .dot.selected {
           border-width: 2px;
           border-color: #327eff;
