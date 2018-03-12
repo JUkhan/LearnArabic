@@ -52,12 +52,25 @@ page-lesson {
         width: 300px;
     }
     .bt{
-        border-top: solid 1px black;
+        border-top: solid 2px yellowgreen;
     }
     .bbs{
-        border-bottom: solid 1px black;
+        border-bottom: solid 2px yellowgreen;
     }
     .bbd{
-        border-bottom: dotted 1px black;
+        border-bottom: dotted 2px yellowgreen;
+    }
+    .ans{
+       border-bottom: dotted 2px black;
+       display: block;
+       width: 100%;
+    }
+    .table-row{
+        border-radius:4px; 
+        border: dotted 2px #488aff;
+        margin-top: 1em;
+    }
+    .bgrow{
+        background-color: darkgrey;
     }
 }

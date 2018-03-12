@@ -20,7 +20,9 @@ export class AppService{
     getLesson(){
         return this.setting.language==='en'?'Lesson ':'পাঠ '
     }
-    getNumber(index:any){        
+    getNumber(index:any, isArabic:boolean=false){
+        if(isArabic)
+          return index.toString().split('').map((d, i)=>String.fromCharCode(d.charCodeAt(0)+1584)).join('');    
         return this.setting.language==='en'?index.toString(): index.toString().split('').map((d, i)=>String.fromCharCode(d.charCodeAt(0)+2486)).join('');
     }
     getTitle(data?:SettingState){
@@ -28,7 +30,7 @@ export class AppService{
         if(this.setting.language==='en'){
             return `${this.capitalize(data.bookName)} ▸ ${data.activeLesson} ▸ ${data.activePage}`;
         }        
-        return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`.replace(/(\d)+/g, this.getNumber.bind(this))
+        return `${data.bookName} ▸ ${data.activeLesson} ▸ ${data.activePage}`.replace(/(\d)+/g, n=>this.getNumber(n))
         .replace(/([a-zA-Z])+/g, w=>{
             switch (w.toLowerCase()) {                
                 case 'grammar': return 'ব্যাকরণ-'
@@ -43,7 +45,7 @@ export class AppService{
     getTheme(themeName){
         switch (themeName) {
             case 'xwhite': return{background:'#ddd', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
-            case 'white': return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
+            case 'white': return{background:'#fafafa', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
             case 'tan': return{background:'rgb(249, 241, 228)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
             case 'grey': return{background:'rgb(76, 75, 80)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  
             case 'purple': return{background:'#b662ea', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}  

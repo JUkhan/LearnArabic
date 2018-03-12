@@ -20,7 +20,7 @@
 <ion-content [ngStyle]="theme">
   <ion-grid>
     <ion-row>
-      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-1 col-xl-10 offset-xl-1>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-2 col-xl-8 offset-xl-2>
         <div *ngIf="pageData.videos">
           <ion-list>
             <ion-item *ngFor="let video of pageData.videos">
@@ -33,17 +33,40 @@
             <div id="player"></div>
           </div>
         </div>
-        <p (press)="addToFavorites(line, li)" [attr.text-right]="line.d?'':null" [class.fav]="line.fav" [attr.no-margin]="line.nom" dir="line.d||'ltr'" class="line"
-          *ngFor="let line of pageData.lines;let li=index">
-          <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
-            {{word.w}}
-          </span>
-         
-           <ion-icon  style="margin-top:6px" *ngIf="line.mic" (click)="lineSpeak(line)" float-left name="mic"></ion-icon>
-         
-        </p>
+        <div *ngFor="let line of pageData.lines;let li=index">
+          <div [ngSwitch]="line.mode">
+            <ion-grid *ngSwitchCase="'table'">
+              <ion-row [class.bgrow]="rowIndex<line.bgcrows" [class.table-row]="line.border" *ngFor="let row of line.lines;let rowIndex=index">
+                <ion-col col-12 col-sm align-self-start *ngFor="let colLine of row;let colIndex=index">
+
+                  <p (press)="addToFavorites(colLine, li, rowIndex, colIndex)" [attr.text-right]="colLine.d?'':null" [class.fav]="colLine.fav"
+                    [attr.no-margin]="colLine.nom" dir="line.d||'ltr'" class="line">
+                    <span [class.ans]="colLine.ans">
+                      <span class="word" *ngIf="rowIndex>=line.bgcrows && line.lineno && pageData.isReverse && colIndex===line.cols-1">{{appService.getNumber(rowIndex+1-line.bgcrows,true)}})</span>
+                      <span class="word" *ngIf="rowIndex>=line.bgcrows && line.lineno && !pageData.isReverse && colIndex===0">{{appService.getNumber(rowIndex+1-line.bgcrows,true)}})</span>
+                      <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(colLine, word)" class="word"
+                        *ngFor="let word of colLine.words">
+                        {{word.w||'ans...'}}
+                      </span>
+                      <ion-icon style="margin-top:6px" *ngIf="colLine.mic" (click)="lineSpeak(colLine)" float-left name="mic"></ion-icon>
+                    </span>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <div *ngSwitchDefault>
+              <p (press)="addToFavorites(line, li)" [attr.text-right]="line.d?'':null" [class.fav]="line.fav" [attr.no-margin]="line.nom"
+                dir="line.d||'ltr'" class="line">
+                <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
+                  {{word.w}}
+                </span>
+                <ion-icon style="margin-top:6px" *ngIf="line.mic" (click)="lineSpeak(line)" float-left name="mic"></ion-icon>
+              </p>
+            </div>
+          </div>
+        </div>
       </ion-col>
-    </ion-row> 
+    </ion-row>
   </ion-grid>
 </ion-content>
 

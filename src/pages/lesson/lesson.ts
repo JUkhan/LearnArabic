@@ -30,7 +30,8 @@ export class LessonPage implements OnDestroy {
   theme: any = {};
   settingSubscription: any;
   bookmarkSubscription: any;
-  bookmarkList:Bookmark[]=[];
+  bookmarkList: Bookmark[] = [];
+  winResize: any;
 
   constructor(
     public navCtrl: NavController,
@@ -39,18 +40,23 @@ export class LessonPage implements OnDestroy {
     public platform: Platform,
     public popoverCtrl: PopoverController,
     private appService: AppService,
-    public navParams: NavParams) {    
+    public navParams: NavParams) {
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
-      this.theme = this.appService.getTheme(setting.theme);  
-       if(setting.pages===0)this.resolveEmptyPage();    
+      this.theme = this.appService.getTheme(setting.theme);
+      if (setting.pages === 0) this.resolveEmptyPage();
     });
-    this.bookmarkSubscription= this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
-      this.bookmarkList=bookmarkList;     
+    this.bookmarkSubscription = this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
+      this.bookmarkList = bookmarkList;
     });
     this.resolveEmptyPage();
     this.appService.inLesson = true;
+
+    this.winResize = this.platform.resize.subscribe(res => {
+      this.orderingTableData();
+    });
   }
-  resolveEmptyPage(){
+
+  resolveEmptyPage() {
     if (!this.appService.setting.pages) {
       this.appService.getBook(`${this.appService.setting.bookName}/${this.appService.setting.activeLesson}/info`).subscribe((res: any) => {
         this.totalPage = res.pages;
@@ -63,12 +69,13 @@ export class LessonPage implements OnDestroy {
       this.totalPage = this.appService.setting.pages;
       this.activePage = +this.appService.setting.activePage.replace('page', '');
       this.loadPageData(this.activePage);
-    }    
+    }
   }
   ngOnDestroy() {
     this.appService.inLesson = false;
     this.settingSubscription.unsubscribe();
     this.bookmarkSubscription.unsubscribe();
+    this.winResize.unsubscribe();
   }
 
   prev() {
@@ -87,20 +94,71 @@ export class LessonPage implements OnDestroy {
       this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
     }
   }
+  orderingTableData() {
+   
+    if (this.platform.win().innerWidth > 573 && this.pageData.isReverse === false) {
+      this.pageData.lines.forEach(line => {
+        if (line.mode === 'table' && line.d === 'rtl') {
+          this.pageData.isReverse=true;
+          line.lines=line.lines.map(_=>_.reverse());
+        }
+      });
+    }
+    if (this.platform.win().innerWidth < 573 && this.pageData.isReverse === true) {
+      this.pageData.lines.forEach(line => {
+        if (line.mode === 'table' && line.d === 'rtl') {
+          this.pageData.isReverse=false;
+          line.lines=line.lines.map(_=>_.reverse());
+        }
+      });
+    }
+  }
+  mapTableData() {
+    this.pageData.isReverse = false;
+    this.pageData.lines.forEach(line => {
+      if (line.mode === 'table' && line.cols > 0 && Array.isArray(line.lines)) {
 
+        let tempTable = [], first = 1, group: any[],len=line.lines.length-1;
+        line.lines.forEach((tline, tindex) => {         
+          if (!tline.d)
+            tline.d = line.d;
+          if (first === 1) {
+            group = [tline];
+          }
+          else if (first === line.cols||tindex===len) {
+            first = 0;
+            group.push(tline);            
+            tempTable.push(group);
+          }
+          else  group.push(tline);
+          first++;
+        });
+        line.lines = tempTable;
+      }
+    });
+  }
   loadPageData(pageNo) {
     this.appService.getBook(`${this.appService.setting.bookName}/${this.appService.setting.activeLesson}/page${pageNo}`).subscribe((res: any) => {
       this.pageData = res;
-      if(Array.isArray(this.pageData.lines)){
-        this.bookmarkList.forEach(f=>{          
-            if(f.book===this.appService.setting.bookName &&
-            'lesson'+f.lesson===this.appService.setting.activeLesson &&
-            f.page===this.activePage)
-            this.pageData.lines[f.line].fav=true;
+      if (Array.isArray(this.pageData.lines)) {
+        this.mapTableData();
+        this.orderingTableData();
+        this.bookmarkList.forEach(f => {
+          if (f.book === this.appService.setting.bookName &&
+            'lesson' + f.lesson === this.appService.setting.activeLesson &&
+            f.page === this.activePage) {
+            if (f.rowIndex >= 0 && f.colIndex >= 0) {
+              if (this.pageData.lines[f.line].mode === 'table') {
+                this.pageData.lines[f.line].lines[f.rowIndex][f.colIndex].fav = true;
+              }
+            }
+            else this.pageData.lines[f.line].fav = true;
+          }
+
         });
       }
       if (Array.isArray(res.videos)) {
-        this.player=null;
+        this.player = null;
         const video = res.videos.find(_ => _.id === this.appService.setting.video.id);
         if (video) {
           const tid = setTimeout(() => {
@@ -115,7 +173,7 @@ export class LessonPage implements OnDestroy {
       //console.log(res)
     });
   }
-  isBrowser(){
+  isBrowser() {
     return this.platform.is('core') || this.platform.is('mobileweb');
   }
   setMeaning(line, word) {
@@ -128,18 +186,22 @@ export class LessonPage implements OnDestroy {
     }
     if (this.isBrowser()) {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female",{onend:()=>{
-          this.speakForWordMeaning(word.m, false);
-        }}); 
-       
+        responsiveVoice.speak(word.w || word.a, "Arabic Female", {
+          onend: () => {
+            this.speakForWordMeaning(word.m, false);
+          }
+        });
+
       } else {
-        responsiveVoice.speak(word.w || word.a);       
+        responsiveVoice.speak(word.w || word.a);
       }
     } else {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female",{onend:()=>{
-          this.speakForWordMeaning(word.m, true);
-        }});         
+        responsiveVoice.speak(word.w || word.a, "Arabic Female", {
+          onend: () => {
+            this.speakForWordMeaning(word.m, true);
+          }
+        });
       } else {
         //responsiveVoice.speak(word.w || word.a);
         this.tts.speak({ text: word.w || word.a, rate: 0.5 })
@@ -148,37 +210,44 @@ export class LessonPage implements OnDestroy {
       }
     }
   }
-  lineSpeak(line:any){
-    const words=line.words.map(word=>word.w).join(' ');
+  lineSpeak(line: any) {
+
+    const words = line.words.map(word => word.w || word.a).join(' ');
+    if (line.ans) {
+      line.words.forEach(word => {
+        if (!word.w) word.w = word.a;
+      });
+    }
     if (this.isBrowser()) {
       if (line.d === 'rtl') {
-        responsiveVoice.speak(words, "Arabic Female");        
+        responsiveVoice.speak(words, "Arabic Female");
       } else {
         responsiveVoice.speak(words);
       }
     } else {
       if (line.d === 'rtl') {
         responsiveVoice.speak(words, "Arabic Female");
-      } else {        
+      } else {
         this.tts.speak({ text: words, rate: 0.5 })
           .then(() => { })
           .catch((reason: any) => console.log(reason));
       }
     }
   }
-  speakForWordMeaning(word, isTTS){
-    if(isTTS){
+  speakForWordMeaning(word, isTTS) {
+    if (!word) return;
+    if (isTTS) {
       this.tts.speak({ text: word, rate: 0.5 })
-          .then(() => { })
-          .catch((reason: any) => console.log(reason));
-    }else{
+        .then(() => { })
+        .catch((reason: any) => console.log(reason));
+    } else {
       console.log(word)
-     console.log(responsiveVoice.speak(word));
+      console.log(responsiveVoice.speak(word));
     }
   }
   calculateCssClass(word) {
     let css: any = { selected: word.s && word.m };
-    if (word.ws)
+    if (word.ws && !word.w)
       css[`ws${word.ws}`] = true;
     css.bt = word.bt;
     css.bbd = word.bbd;
@@ -208,8 +277,8 @@ export class LessonPage implements OnDestroy {
       return;
     }
     this.player = new YT.Player('player', {
-      height:this.isBrowser()?390: 320,
-      width: this.isBrowser()?640:330,
+      height: this.isBrowser() ? 390 : 320,
+      width: this.isBrowser() ? 640 : 330,
       videoId: video.id,
       // playerVars: { 'autoplay': 1, 'controls': 0 },
       events: {
@@ -245,20 +314,23 @@ export class LessonPage implements OnDestroy {
         this.store.dispatch(new settingActions.UpdateBookInfo({ video: { id: this.selectedVideo.id, time: event.target.getCurrentTime() } }));
     }
   }
-  addToFavorites(line, li) {  
-    
+  addToFavorites(line, li, rowIndex, colIndex) {
+
     if (typeof line.fav === 'undefined')
       line.fav = true;
     else line.fav = !line.fav;
-    const favObj:Bookmark={
-      book:this.appService.setting.bookName,
-      lesson:+this.appService.setting.activeLesson.replace('lesson',''),
-      page:this.activePage,
-      line:li
+    const favObj: Bookmark = {
+      book: this.appService.setting.bookName,
+      lesson: +this.appService.setting.activeLesson.replace('lesson', ''),
+      page: this.activePage,
+      line: li
     }
-    if(line.fav)
+    favObj.rowIndex = typeof rowIndex === 'undefined' ? -1 : rowIndex;
+    favObj.colIndex = typeof colIndex === 'undefined' ? -1 : colIndex;
+
+    if (line.fav)
       this.store.dispatch(new bookmarkActions.BookmarkAdd(favObj));
-    else  this.store.dispatch(new bookmarkActions.BookmarkRemove(favObj));
+    else this.store.dispatch(new bookmarkActions.BookmarkRemove(favObj));
   }
 }
 

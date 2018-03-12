@@ -6,7 +6,9 @@ export interface Bookmark {
     lesson:number;
     page:number;
     line?:number;
-    data?:string
+    data?:string;
+    rowIndex?:number;
+    colIndex?:number;
 }
 
 export const initialState: Bookmark[] = [];
