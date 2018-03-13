@@ -119,7 +119,7 @@ export class LessonPage implements OnDestroy {
     this.pageData.isReverse = false;
     this.pageData.lines.forEach(line => {
       if (line.mode === 'table' && line.cols > 0 && Array.isArray(line.lines)) {
-
+        if(!line.bgcrows)line.bgcrows=0;
         let tempTable = [], first = 1, group: any[],len=line.lines.length-1;
         line.lines.forEach((tline, tindex) => {         
           if (!tline.d)
@@ -251,7 +251,7 @@ export class LessonPage implements OnDestroy {
     }
   }
   calculateCssClass(word) {
-    let css: any = { selected: word.s && word.m };
+    let css: any = { selected: word.s && word.e };
     if (word.ws && !word.w)
       css[`ws${word.ws}`] = true;
     css.bt = word.bt;
