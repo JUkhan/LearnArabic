@@ -3,10 +3,18 @@ import {Action} from '@ngrx/store';
 export const CHANGE_LANGUAGE = "[setting] cl"; 
 export const LOAD_SETTING = "[setting] ls";
 export const UPDATE_BOOK_INFO = "[setting] ls";
+export const CHANGE_SPEAKER = "[setting] speaker"; 
 
 export class ChangeLanguage implements Action{
     readonly type=CHANGE_LANGUAGE;    
     constructor(public payload:'ba'|'en'){
+       
+    }
+}
+
+export class ChangeSpeaker implements Action{
+    readonly type=CHANGE_SPEAKER;    
+    constructor(public payload:'male'|'female'|'none'){
        
     }
 }
@@ -23,4 +31,4 @@ export class UpdateBookInfo implements Action{
     }
 }
 
-export type Actions = ChangeLanguage|LoadSetting|UpdateBookInfo ;
+export type Actions = ChangeLanguage|LoadSetting|UpdateBookInfo|ChangeSpeaker ;

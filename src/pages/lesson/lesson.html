@@ -46,9 +46,9 @@
                       <span class="word" *ngIf="rowIndex>=line.bgcrows && line.lineno && !pageData.isReverse && colIndex===0">{{appService.getNumber(rowIndex+1-line.bgcrows,true)}})</span>
                       <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(colLine, word)" class="word"
                         *ngFor="let word of colLine.words">
-                        {{word.w||'ans...'}}
+                        {{word.w||'ans'}}
                       </span>
-                      <ion-icon style="margin-top:6px" *ngIf="colLine.mic" (click)="lineSpeak(colLine)" float-left name="mic"></ion-icon>
+                      <ion-icon style="margin-top:6px" *ngIf="speaker!=='none' && colLine.mic" (click)="lineSpeak(colLine)" float-left name="mic"></ion-icon>
                     </span>
                   </p>
                 </ion-col>
@@ -60,7 +60,7 @@
                 <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
                   {{word.w}}
                 </span>
-                <ion-icon style="margin-top:6px" *ngIf="line.mic" (click)="lineSpeak(line)" float-left name="mic"></ion-icon>
+                <ion-icon style="margin-top:6px" *ngIf="speaker!=='none' && line.mic" (click)="lineSpeak(line)" float-left name="mic"></ion-icon>
               </p>
             </div>
           </div>
@@ -72,7 +72,7 @@
 
 <ion-footer no-border>
   <ion-toolbar color="primary">
-    <ion-title>{{selectedWord.m}}</ion-title>
+    <ion-title>{{getMeaning(selectedWord, appService.setting.language)}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="prev()" [disabled]="activePage===1">
         <ion-icon name="arrow-dropleft"></ion-icon>

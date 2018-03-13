@@ -2,7 +2,11 @@
     "WELCOME":"Let's learn Arabic and read The Quran",
     "SETTINGS":{       
         "LANGUAGE":"Language",
-        "LANGUAGE_CHANGE":"Language changes"
+        "LANGUAGE_CHANGE":"Language changes",
+        "SPEAKER":"Speaker",
+        "MALE":"Male",
+        "FEMALE":"Female",
+        "NONE":"None"
     },
     "LANGUAGES":{
         "BANGLA":"Bengali",

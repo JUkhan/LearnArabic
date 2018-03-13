@@ -2,7 +2,11 @@
     "WELCOME":"আসুন আমরা আরবী শিখি এবং কুরআন পড়ি",
     "SETTINGS":{       
         "LANGUAGE":"ভাষা",
-        "LANGUAGE_CHANGE":"ভাষা পরিবর্তন"
+        "LANGUAGE_CHANGE":"ভাষা পরিবর্তন",
+        "SPEAKER":"বক্তা",
+        "MALE":"পুরুষ",
+        "FEMALE":"মহিলা",
+        "NONE":"কেউ না"
     },
     "LANGUAGES":{
         "BANGLA":"বাংলা",

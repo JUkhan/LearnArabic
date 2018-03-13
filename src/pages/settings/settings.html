@@ -5,23 +5,35 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-    <ion-toolbar color="primary">
+  <ion-toolbar color="primary">
     <button ion-button menuToggle end>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{"PAGES.SETTINGS"|translate}}</ion-title>
-    </ion-toolbar>
+  </ion-toolbar>
 
 </ion-header>
 
 
-<ion-content >
-  <ion-list>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-2 col-xl-8 offset-xl-2>
+        <ion-list>
 
-    <button ion-item (click)="changeLanguage(language)">
-      {{"SETTINGS.LANGUAGE"|translate}}
-      <ion-note item-right>{{languageVocab[language]}}</ion-note>
-    </button>
+          <button ion-item (click)="changeLanguage(language)">
+            {{"SETTINGS.LANGUAGE"|translate}}
+            <ion-note item-right>{{languageVocab[language]}}</ion-note>
+          </button>
 
-  </ion-list>
+          <button ion-item (click)="changeSpeaker(speaker)">
+              {{"SETTINGS.SPEAKER"|translate}}
+              <ion-note item-right>{{getSpeaker(speaker)}}</ion-note>
+            </button>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

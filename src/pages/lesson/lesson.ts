@@ -32,6 +32,7 @@ export class LessonPage implements OnDestroy {
   bookmarkSubscription: any;
   bookmarkList: Bookmark[] = [];
   winResize: any;
+  speaker:'male'|'female'|'none';
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +44,7 @@ export class LessonPage implements OnDestroy {
     public navParams: NavParams) {
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
       this.theme = this.appService.getTheme(setting.theme);
+      this.speaker=setting.speaker; 
       if (setting.pages === 0) this.resolveEmptyPage();
     });
     this.bookmarkSubscription = this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
@@ -180,31 +182,30 @@ export class LessonPage implements OnDestroy {
     this.selectedWord.s = false;
     word.s = true;
     this.selectedWord = word;
-
-    const ttsOptions: any = {
-      text: word.w
-    }
+    if(!word.w)word.w=word.a; 
+    
+    if(this.speaker==='none')return;
     if (this.isBrowser()) {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female", {
+        responsiveVoice.speak(word.w , "Arabic Female", {
           onend: () => {
-            this.speakForWordMeaning(word.m, false);
+            this.speakForWordMeaning(word.e, false);
           }
         });
 
       } else {
-        responsiveVoice.speak(word.w || word.a);
+        responsiveVoice.speak(word.w);
       }
     } else {
       if (word.d === 'rtl' || line.d === 'rtl') {
-        responsiveVoice.speak(word.w || word.a, "Arabic Female", {
+        responsiveVoice.speak(word.w , "Arabic Female", {
           onend: () => {
-            this.speakForWordMeaning(word.m, true);
+            this.speakForWordMeaning(word.e, true);
           }
         });
       } else {
         //responsiveVoice.speak(word.w || word.a);
-        this.tts.speak({ text: word.w || word.a, rate: 0.5 })
+        this.tts.speak({ text: word.w , rate: 0.5 })
           .then(() => { })
           .catch((reason: any) => console.log(reason));
       }
@@ -218,15 +219,17 @@ export class LessonPage implements OnDestroy {
         if (!word.w) word.w = word.a;
       });
     }
+    if(this.speaker==='none')return;
+    
     if (this.isBrowser()) {
       if (line.d === 'rtl') {
-        responsiveVoice.speak(words, "Arabic Female");
+        responsiveVoice.speak(words, this.getArabicSpeaker(true));
       } else {
         responsiveVoice.speak(words);
       }
     } else {
       if (line.d === 'rtl') {
-        responsiveVoice.speak(words, "Arabic Female");
+        responsiveVoice.speak(words, this.getArabicSpeaker(true));
       } else {
         this.tts.speak({ text: words, rate: 0.5 })
           .then(() => { })
@@ -234,15 +237,17 @@ export class LessonPage implements OnDestroy {
       }
     }
   }
+  getArabicSpeaker(isArabic:boolean){
+    return isArabic?`Arabic ${this.appService.capitalize(this.speaker)}`:`UK English ${this.appService.capitalize(this.speaker)}`;
+  }
   speakForWordMeaning(word, isTTS) {
     if (!word) return;
     if (isTTS) {
       this.tts.speak({ text: word, rate: 0.5 })
         .then(() => { })
         .catch((reason: any) => console.log(reason));
-    } else {
-      console.log(word)
-      console.log(responsiveVoice.speak(word));
+    } else {     
+      responsiveVoice.speak(word);
     }
   }
   calculateCssClass(word) {
@@ -285,9 +290,7 @@ export class LessonPage implements OnDestroy {
         'onReady': this.onPlayerReady.bind(this),
         'onStateChange': this.onPlayerStateChange.bind(this)
       }
-    });
-
-    console.log(this.player);
+    });    
   }
   onPlayerReady(event) {
     event.target.playVideo();
@@ -331,6 +334,11 @@ export class LessonPage implements OnDestroy {
     if (line.fav)
       this.store.dispatch(new bookmarkActions.BookmarkAdd(favObj));
     else this.store.dispatch(new bookmarkActions.BookmarkRemove(favObj));
+  }
+  getMeaning(selectedWord, language){
+    return language==='en'?
+    `${selectedWord.e||''}-${selectedWord.b||''}`:`${selectedWord.b||''}-${selectedWord.e||''}`;
+   
   }
 }
 

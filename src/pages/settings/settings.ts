@@ -17,8 +17,9 @@ import { SettingState } from '../../app/store/reducers/setting.reducer';
   templateUrl: 'settings.html',
 })
 export class SettingsPage implements OnDestroy {
-  settingSubscription:any;
+  settingSubscription: any;
   language: string;
+  speaker: string;
   languageVocab: any = {
     ba: 'বাংলা', en: 'English'
   }
@@ -26,44 +27,93 @@ export class SettingsPage implements OnDestroy {
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private store: Store<AppState>,
-    private translate:TranslateService,    
+    private translate: TranslateService,
     public navParams: NavParams) {
-      this.settingSubscription=this.store.select(state=>state.setting).subscribe((setting:SettingState)=>{
-        this.language=setting.language;
-      });
+    this.settingSubscription = this.store.select(state => state.setting).subscribe((setting: SettingState) => {
+      this.language = setting.language;
+      this.speaker = setting.speaker;
+    });
   }
-  
-  ngOnDestroy(){    
+
+  ngOnDestroy() {
     this.settingSubscription.unsubscribe();
   }
-  changeLanguage(lan:string) {
+  changeLanguage(lan: string) {
     let prompt = this.alertCtrl.create({
-      title: this.translate.instant('SETTINGS.LANGUAGE_CHANGE') ,
+      title: this.translate.instant('SETTINGS.LANGUAGE_CHANGE'),
       inputs: [
         {
           type: "radio",
-          label:  this.translate.instant('LANGUAGES.BANGLA'),
+          label: this.translate.instant('LANGUAGES.BANGLA'),
           value: 'ba',
-          checked: this.language==='ba'
+          checked: lan === 'ba'
         },
         {
           type: "radio",
-          label:  this.translate.instant('LANGUAGES.ENGLISH'),
+          label: this.translate.instant('LANGUAGES.ENGLISH'),
           value: 'en',
-          checked: this.language==='en'
+          checked: lan === 'en'
         }
       ],
       buttons: [
         {
           text: "Cancel",
           handler: data => {
-            
+
           }
         },
         {
           text: "Save",
-          handler: data => {           
-           this.store.dispatch(new settingActions.ChangeLanguage(data));
+          handler: data => {
+            this.store.dispatch(new settingActions.ChangeLanguage(data));
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+  getSpeaker(speaker: string) {
+    switch (speaker) {
+      case 'male': return this.translate.instant('SETTINGS.MALE');
+      case 'female': return this.translate.instant('SETTINGS.FEMALE');
+      case 'none': return this.translate.instant('SETTINGS.NONE');
+
+    }
+  }
+  changeSpeaker(speaker: string) {
+    let prompt = this.alertCtrl.create({
+      title: this.translate.instant('SETTINGS.SPEAKER'),
+      inputs: [
+        {
+          type: "radio",
+          label: this.translate.instant('SETTINGS.MALE'),
+          value: 'male',
+          checked: speaker === 'male'
+        },
+        {
+          type: "radio",
+          label: this.translate.instant('SETTINGS.FEMALE'),
+          value: 'female',
+          checked: speaker === 'female'
+        },
+        {
+          type: "radio",
+          label: this.translate.instant('SETTINGS.NONE'),
+          value: 'none',
+          checked: speaker === 'none'
+        }
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          handler: data => {
+
+          }
+        },
+        {
+          text: "Save",
+          handler: data => {
+            this.store.dispatch(new settingActions.ChangeSpeaker(data));
           }
         }
       ]
