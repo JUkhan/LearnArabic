@@ -15,20 +15,27 @@
 
 <ion-content>
   <ion-list class="popover-page">
-    <ion-row>
-      <ion-col>
-        <button (click)="changeFontSize('22px')" ion-item detail-none class="text-button text-22" [class.font-selected]="fontSize==='22px'">A</button>
-      </ion-col>
-      <ion-col>
-        <button (click)="changeFontSize('24px')" ion-item detail-none class="text-button text-24" [class.font-selected]="fontSize==='24px'">A</button>
-      </ion-col>
-      <ion-col>
-        <button (click)="changeFontSize('26px')" ion-item detail-none class="text-button text-26" [class.font-selected]="fontSize==='26px'">A</button>
-      </ion-col>
+    <ion-item>
+      <!-- <ion-label>Font Size </ion-label> -->
+      <ion-range min="22" max="40" step="2" snaps="true" color="secondary" (ionChange)="changeFontSize(fontSize)" [(ngModel)]="fontSize"></ion-range>
+    </ion-item>
+    <!-- <ion-row>
       <ion-col>
         <button (click)="changeFontSize('28px')" ion-item detail-none class="text-button text-28" [class.font-selected]="fontSize==='28px'">A</button>
       </ion-col>
-    </ion-row>
+      <ion-col>
+        <button (click)="changeFontSize('32px')" ion-item detail-none class="text-button text-32" [class.font-selected]="fontSize==='32px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('36px')" ion-item detail-none class="text-button text-36" [class.font-selected]="fontSize==='36px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('38px')" ion-item detail-none class="text-button text-38" [class.font-selected]="fontSize==='38px'">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('42px')" ion-item detail-none class="text-button text-42" [class.font-selected]="fontSize==='42px'">A</button>
+      </ion-col>
+    </ion-row> -->
     <ion-row class="row-dots">
       <ion-col>
         <button ion-button="dot" (click)="changeBackground('white')" class="dot-white" [class.selected]="background == 'white'"></button>
@@ -50,7 +57,7 @@
     <button color="dark" ion-item *ngFor="let lesson of lessons" (click)="lessonSelected(lesson)">
       <ion-icon name="leaf" color="primary" item-start></ion-icon>
       {{ lesson.name }}
-    </button>    
+    </button>
   </ion-list>
   <ion-toolbar color="light">
     <ion-buttons text-center>

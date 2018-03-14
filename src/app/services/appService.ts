@@ -43,15 +43,16 @@ export class AppService{
         
     }    
     getTheme(themeName){
+        const fontSize=this.setting.fontSize+'px';
         switch (themeName) {
-            case 'xwhite': return{background:'#ddd', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
-            case 'white': return{background:'#fafafa', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize};                
-            case 'tan': return{background:'rgb(249, 241, 228)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
-            case 'grey': return{background:'rgb(76, 75, 80)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  
-            case 'purple': return{background:'#b662ea', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}  
-            case 'black': return{background:'rgb(0, 0, 0)', color:'rgb(255, 255, 255)', fontSize:this.setting.fontSize}  
+            case 'xwhite': return{background:'#ddd', color:'rgb(0, 0, 0)', fontSize};                
+            case 'white': return{background:'#fafafa', color:'rgb(0, 0, 0)', fontSize};                
+            case 'tan': return{background:'rgb(249, 241, 228)', color:'rgb(0, 0, 0)', fontSize}
+            case 'grey': return{background:'rgb(76, 75, 80)', color:'rgb(255, 255, 255)', fontSize}  
+            case 'purple': return{background:'#b662ea', color:'rgb(0, 0, 0)', fontSize}  
+            case 'black': return{background:'rgb(0, 0, 0)', color:'rgb(255, 255, 255)', fontSize}  
             default:
-             return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize:this.setting.fontSize}
+             return{background:'rgb(255, 255, 255)', color:'rgb(0, 0, 0)', fontSize}
         }
     }
 }

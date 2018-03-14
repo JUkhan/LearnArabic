@@ -10,7 +10,7 @@ export interface SettingState {
     pages?:number;
     lessons?:number;
     theme?:string;
-    fontSize?:string;
+    fontSize?:number;
     video?:{id?:string, time?:number}
 }
 
@@ -18,7 +18,7 @@ export const initialState: SettingState = {
     speaker:'male',
     language: 'ba',
     theme:'white',
-    fontSize:'22px',
+    fontSize:22,
     video:{}
 };
 

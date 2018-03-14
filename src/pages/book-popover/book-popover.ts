@@ -37,7 +37,7 @@ export class BookPopoverPage {
   }
   settingSubscription: any;
   background: string = '';
-  fontSize: string = '';
+  fontSize: number;
   lessons:Array<any>=[];
   changeBackground(color) {
     this.background = color;
