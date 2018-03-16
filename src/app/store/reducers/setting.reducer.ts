@@ -18,7 +18,7 @@ export const initialState: SettingState = {
     speaker:'male',
     language: 'ba',
     theme:'white',
-    fontSize:22,
+    fontSize:24,
     video:{}
 };
 

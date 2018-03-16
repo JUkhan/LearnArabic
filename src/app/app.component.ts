@@ -64,8 +64,8 @@ export class MyApp implements OnDestroy, AfterViewInit {
       case 'setting':
         this.nav.setRoot(SettingsPage);
         break;
-      case 'book1':
-        const bookInfo: SettingState = { bookName: 'book1', activeLesson: '', activePage: '', pages: 0, lessons: 0 };
+      case 'book1': case 'book2':
+        const bookInfo: SettingState = { bookName: page, activeLesson: '', activePage: '', pages: 0, lessons: 0 };
         this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
         this.nav.setRoot(BookPage);
         break;
@@ -76,5 +76,9 @@ export class MyApp implements OnDestroy, AfterViewInit {
 
     }
 
+  }
+
+  getBookName(no){
+    return `${this.translate.instant('PAGES.BOOK')} ${this.appService.getNumber(no)}`;
   }
 }
