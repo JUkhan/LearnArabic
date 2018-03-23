@@ -1,0 +1,9 @@
+﻿/* @font-face kit by Fonts2u (http://www.fonts2u.com) */
+ @font-face {
+     font-family:"Al Qalam Quran 2";
+     src:url("Al_Qalam_Quran_2.eot?") format("eot"),
+     url("Al_Qalam_Quran_2.woff") format("woff"),
+     url("Al_Qalam_Quran_2.ttf") format("truetype"),
+     url("Al_Qalam_Quran_2.svg#AlQalamQuran2") format("svg");
+     font-weight:normal;font-style:normal;
+    }

@@ -250,13 +250,24 @@ export class LessonPage implements OnDestroy {
       responsiveVoice.speak(word);
     }
   }
-  calculateCssClass(word) {
+  getContentFontAndColor(){
+    let fontSize=+this.theme.fontSize.replace('px','');
+    if(fontSize>30){
+      return {...this.theme, fontSize:'30px'};
+    }
+    return this.theme;
+  }
+  getFontAndColor(line, word){
+    return (word.d==='rtl'||line.d==='rtl')?this.theme:null;
+  }
+  calculateCssClass(line, word) {
     let css: any = { selected: word.s && word.e };
     if (word.ws && !word.w)
       css[`ws${word.ws}`] = true;
     css.bt = word.bt;
     css.bbd = word.bbd;
     css.bbs = word.bbs;
+    css.af=(word.d==='rtl'||line.d==='rtl')?true:false;
     return css;
   }
   showPopover(event) {

@@ -23,3 +23,21 @@ $app-direction: multi ;
     src: url(assets/fonts/p1.ttf) format("ttf");
     
 }
+
+@font-face {
+    font-family:"Al Qalam Quran Majeed Web";
+    src:url("../assets/arabicFonts/Al_Qalam_Quran_Majeed_Web/Al_Qalam_Quran_Majeed_Web.eot?") format("eot"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_Majeed_Web/Al_Qalam_Quran_Majeed_Web.woff") format("woff"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_Majeed_Web/Al_Qalam_Quran_Majeed_Web.ttf") format("truetype"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_Majeed_Web/Al_Qalam_Quran_Majeed_Web.svg#AlQalamQuranMajeedWeb") format("svg");
+    font-weight:normal;font-style:normal;
+}
+
+@font-face {
+    font-family:"Al Qalam Quran 2";
+    src:url("../assets/arabicFonts/Al_Qalam_Quran_2/Al_Qalam_Quran_2.eot?") format("eot"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_2/Al_Qalam_Quran_2.woff") format("woff"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_2/Al_Qalam_Quran_2.ttf") format("truetype"),
+    url("../assets/arabicFonts/Al_Qalam_Quran_2/Al_Qalam_Quran_2.svg#AlQalamQuran2") format("svg");
+    font-weight:normal;font-style:normal;
+   }

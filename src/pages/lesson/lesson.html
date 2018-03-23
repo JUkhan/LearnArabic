@@ -17,7 +17,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [ngStyle]="theme">
+<ion-content [ngStyle]="getContentFontAndColor()">
   <ion-grid>
     <ion-row>
       <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-2 col-xl-8 offset-xl-2>
@@ -44,7 +44,7 @@
                     <span [class.ans]="colLine.ans">
                       <span class="word" *ngIf="rowIndex>=line.bgcrows && line.lineno && pageData.isReverse && colIndex===line.cols-1">{{appService.getNumber(rowIndex+1-line.bgcrows,true)}})</span>
                       <span class="word" *ngIf="rowIndex>=line.bgcrows && line.lineno && !pageData.isReverse && colIndex===0">{{appService.getNumber(rowIndex+1-line.bgcrows,true)}})</span>
-                      <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(colLine, word)" class="word"
+                      <span [attr.dir]="word.d?word.d:null" [ngStyle]="getFontAndColor(colLine, word)" [ngClass]="calculateCssClass(colLine, word)" (click)="setMeaning(colLine, word)" class="word"
                         *ngFor="let word of colLine.words">
                         {{word.w||'ans'}}
                       </span>
@@ -57,7 +57,7 @@
             <div *ngSwitchDefault>
               <p (press)="addToFavorites(line, li)" [attr.text-right]="line.d?'':null" [class.fav]="line.fav" [attr.no-margin]="line.nom"
                 dir="line.d||'ltr'" class="line">
-                <span [attr.dir]="word.d?word.d:null" [ngClass]="calculateCssClass(word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
+                <span [attr.dir]="word.d?word.d:null" [ngStyle]="getFontAndColor(line, word)" [ngClass]="calculateCssClass(line, word)" (click)="setMeaning(line, word)" class="word" *ngFor="let word of line.words">
                   {{word.w}}
                 </span>
                 <ion-icon style="margin-top:6px" *ngIf="speaker!=='none' && line.mic" (click)="lineSpeak(line)" float-left name="mic"></ion-icon>

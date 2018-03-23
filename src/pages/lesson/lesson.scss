@@ -3,11 +3,15 @@ page-lesson {
         border-radius:.2em;
         border: solid 1px #333;
     }
+    .af{
+        //font-family:"Al Qalam Quran Majeed Web";
+        font-family:"Al Qalam Quran 2";
+        
+    }
     .word{       
         padding-right: 0.2em;       
         line-height: 45px;
-        cursor: pointer;  
-        font-family: p1;   
+        cursor: pointer;       
     }
     .line{
       
@@ -16,9 +20,10 @@ page-lesson {
         margin-top:0;       
     }
     .selected{        
-        color:green;
+        color:rgb(14, 10, 240) !important;
+       
     }
-    .ws25{
+    .ws25{ 
         display: inline-block;
         width: 25px;
     }
