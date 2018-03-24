@@ -27,6 +27,11 @@
         <ion-icon name="bookmark" color="primary" item-start></ion-icon>
         {{"PAGES.BOOK_MARK"|translate}}
       </button>
+      <button menuClose ion-item (click)="openPage('fullScreen')">
+        <ion-icon [name]="fullScreen?'close':'add'" color="primary" item-start></ion-icon>
+        {{"PAGES.FULL_SCREEN"|translate}}
+      </button>
+     
     </ion-list>
   </ion-content>
 

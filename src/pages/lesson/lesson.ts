@@ -33,7 +33,7 @@ export class LessonPage implements OnDestroy {
   bookmarkList: Bookmark[] = [];
   winResize: any;
   speaker:'male'|'female'|'none';
-
+  isFullScreen:boolean;
   constructor(
     public navCtrl: NavController,
     private store: Store<AppState>,
@@ -45,6 +45,7 @@ export class LessonPage implements OnDestroy {
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
       this.theme = this.appService.getTheme(setting.theme);
       this.speaker=setting.speaker; 
+      this.isFullScreen=setting.fullScreen;
       if (setting.pages === 0) this.resolveEmptyPage();
     });
     this.bookmarkSubscription = this.store.select(s => s.bookmark).subscribe((bookmarkList: Bookmark[]) => {
@@ -252,8 +253,8 @@ export class LessonPage implements OnDestroy {
   }
   getContentFontAndColor(){
     let fontSize=+this.theme.fontSize.replace('px','');
-    if(fontSize>30){
-      return {...this.theme, fontSize:'30px'};
+    if(fontSize>26){
+      return {...this.theme, fontSize:'26px'};
     }
     return this.theme;
   }

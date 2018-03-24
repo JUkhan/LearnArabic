@@ -12,6 +12,7 @@ export interface SettingState {
     theme?:string;
     fontSize?:number;
     video?:{id?:string, time?:number}
+    fullScreen?:boolean;
 }
 
 export const initialState: SettingState = {
@@ -19,7 +20,8 @@ export const initialState: SettingState = {
     language: 'ba',
     theme:'white',
     fontSize:24,
-    video:{}
+    video:{},
+    fullScreen:false
 };
 
 export function settingReducer(
@@ -35,6 +37,9 @@ export function settingReducer(
         }
         case settingActions.UPDATE_BOOK_INFO: {
             return { ...state,  ...action.payload };
+        }
+        case settingActions.UPDATE_FULL_SCREEN: {
+            return { ...state,  fullScreen:action.payload };
         }
         case settingActions.LOAD_SETTING:
             return action.payload || initialState

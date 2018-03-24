@@ -23,6 +23,7 @@ export class MyApp implements OnDestroy, AfterViewInit {
   @ViewChild(Nav) nav: Nav;
   settingSubscription: any;
   rootPage: any = HomePage;
+  fullScreen: boolean;
 
   constructor(public platform: Platform,
     public statusBar: StatusBar,
@@ -33,7 +34,8 @@ export class MyApp implements OnDestroy, AfterViewInit {
     this.initializeApp();
     this.settingSubscription = this.store.select(s => s.setting).subscribe((setting: SettingState) => {
       this.appService.setting = setting;
-      this.translate.use(setting.language);      
+      this.fullScreen = setting.fullScreen;
+      this.translate.use(setting.language);
       !this.appService.inLesson && this.checkActivePage();
     });
   }
@@ -42,11 +44,11 @@ export class MyApp implements OnDestroy, AfterViewInit {
       this.nav.setRoot(LessonPage);
     }
   }
- 
+
   ngOnDestroy() {
     this.settingSubscription.unsubscribe();
   }
-  ngAfterViewInit() {    
+  ngAfterViewInit() {
     this.checkActivePage();
   }
   initializeApp() {
@@ -69,8 +71,12 @@ export class MyApp implements OnDestroy, AfterViewInit {
         this.store.dispatch(new settingActions.UpdateBookInfo(bookInfo));
         this.nav.setRoot(BookPage);
         break;
-        case 'bookmarks':
+      case 'bookmarks':
         this.nav.setRoot(BookmarksPage);
+        break;
+      case 'fullScreen':
+        this.fullScreen = !this.fullScreen;
+        this.store.dispatch(new settingActions.UpdateFullScreen(this.fullScreen));
         break;
       default:
 
@@ -78,7 +84,7 @@ export class MyApp implements OnDestroy, AfterViewInit {
 
   }
 
-  getBookName(no){
+  getBookName(no) {
     return `${this.translate.instant('PAGES.BOOK')} ${this.appService.getNumber(no)}`;
   }
 }

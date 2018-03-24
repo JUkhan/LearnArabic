@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header no-border *ngIf="!isFullScreen">
   <ion-toolbar color="primary">
     <ion-title text-left text-capitalize>{{appService.getTitle()}}</ion-title>
     <ion-buttons end>
@@ -21,7 +21,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-sm-12 col-md-12 col-lg-12 offset-xl-2 col-xl-8 offset-xl-2>
-        <div *ngIf="pageData.videos">
+        <div *ngIf="pageData.videos"> 
           <ion-list>
             <ion-item *ngFor="let video of pageData.videos">
               <ion-icon [color]="video.playing?'danger':'primary'" name="videocam" item-start></ion-icon>
@@ -70,7 +70,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer no-border>
+<ion-footer no-border *ngIf="!isFullScreen">
   <ion-toolbar color="primary">
     <ion-title>{{getMeaning(selectedWord, appService.setting.language)}}</ion-title>
     <ion-buttons end>

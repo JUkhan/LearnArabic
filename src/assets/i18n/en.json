@@ -17,6 +17,7 @@
         "HOME":"Home",
         "SETTINGS":"Settings",
         "BOOK":"Book",       
-        "BOOK_MARK":"Bookmarks"
+        "BOOK_MARK":"Bookmarks",
+        "FULL_SCREEN":"Full Screen"
     }
 }
